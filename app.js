@@ -1,28 +1,38 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var wordCount = 10;
-  var guessCount = 4;
-  var password = '';
+  let wordCount = 10;
+  let guessCount = 4;
+  let password = '';
 
-  var start = document.getElementById('start');
+  let start = document.getElementById('start');
   start.addEventListener('click', function() {
     toggleClasses(document.getElementById('start-screen'), 'hide', 'show');
     toggleClasses(document.getElementById('game-screen'), 'hide', 'show');
     startGame();
   });
 
-  function toggleClasses(element) {
-    for (var i = 1; i < arguments.length; i++) {
-      element.classList.toggle(arguments[i]);
-    }
+  function toggleClasses(element, ...classNames) {
+    // changing to ES6
+    // for (var i = 1; i < arguments.length; i++) {
+    //   element.classList.toggle(arguments[i]);
+    // }
+    return classNames.forEach((el, idx) => {
+      return element.classList.toggle(el);
+    })
   }
 
   function startGame() {
     // get random words and append them to the DOM
-    var wordList = document.getElementById('word-list');
+    let wordList = document.getElementById('word-list');
     // 'words' variable is from words.js
-    var randomWords = getRandomValues(words, wordCount); // eslint-disable-line no-undef
-    randomWords.forEach(function(word) {
-      var li = document.createElement('li');
+    let randomWords = getRandomValues(words, wordCount); // eslint-disable-line no-undef
+    // randomWords.forEach(function(word) {
+    //   let li = document.createElement('li');
+    //   li.innerText = word;
+    //   wordList.appendChild(li);
+    // });
+    //ES6
+    randomWords.forEach((word) => {
+      let li = document.createElement('li');
       li.innerText = word;
       wordList.appendChild(li);
     });
@@ -40,15 +50,19 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function shuffle(array) {
-    var arrayCopy = array.slice();
-    for (var idx1 = arrayCopy.length - 1; idx1 > 0; idx1--) {
+    // let arrayCopy = array.slice();
+    // ES6
+    let arrayCopy = [...array];
+    for (let idx1 = arrayCopy.length - 1; idx1 > 0; idx1--) {
       // generate a random index between 0 and idx1 (inclusive)
-      var idx2 = Math.floor(Math.random() * (idx1 + 1));
+      let idx2 = Math.floor(Math.random() * (idx1 + 1));
 
       // swap elements at idx1 and idx2
-      var temp = arrayCopy[idx1];
-      arrayCopy[idx1] = arrayCopy[idx2];
-      arrayCopy[idx2] = temp;
+      // ES6
+      // var temp = arrayCopy[idx1];
+      // arrayCopy[idx1] = arrayCopy[idx2];
+      // arrayCopy[idx2] = temp;
+      [arrayCopy[idx2],arrayCopy[idx1]] = [arrayCopy[idx1], arrayCopy[idx2]];
     }
     return arrayCopy;
   }
