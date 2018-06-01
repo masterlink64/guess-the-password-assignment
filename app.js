@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-  let wordCount = 10;
+  // change const and lets for ES6
+  const wordCount = 10;
   let guessCount = 4;
   let password = '';
 
   let start = document.getElementById('start');
-  start.addEventListener('click', function() {
+  start.addEventListener('click', /*function()*/ () => {
     toggleClasses(document.getElementById('start-screen'), 'hide', 'show');
     toggleClasses(document.getElementById('game-screen'), 'hide', 'show');
     startGame();
@@ -70,16 +71,16 @@ document.addEventListener('DOMContentLoaded', function() {
   function setGuessCount(newCount) {
     guessCount = newCount;
     document.getElementById('guesses-remaining').innerText =
-      'Guesses remaining: ' + guessCount + '.';
+      `Guesses remaining: ${guessCount}.`;
   }
 
   function updateGame(e) {
     if (e.target.tagName === 'LI' && !e.target.classList.contains('disabled')) {
       // grab guessed word, check it against password, update view
-      var guess = e.target.innerText;
-      var similarityScore = compareWords(guess, password);
+      let guess = e.target.innerText;
+      let similarityScore = compareWords(guess, password);
       e.target.classList.add('disabled');
-      e.target.innerText = guess + ' --> Matching Letters: ' + similarityScore;
+      e.target.innerText = `${guess} --> Matching Letters: similarityScore`;
       setGuessCount(guessCount - 1);
 
       // check whether the game is over
@@ -97,8 +98,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (word1.length !== word2.length) {
       throw 'Words must have the same length';
     }
-    var count = 0;
-    for (var i = 0; i < word1.length; i++) {
+    let count = 0;
+    // can I convert this to es6?
+    for (let i = 0; i < word1.length; i++) {
       if (word1[i] === word2[i]) count++;
     }
     return count;
